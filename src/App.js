@@ -1,7 +1,8 @@
 import { Component } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Cell from "./Cell";
+import Maze from "./components/Maze";
+
 import searchAllRoutes from "./recursiveSerch";
 import { generateNewMaze, changeMazeDimesions } from "./mazeGenerator";
 import "./App.css";
@@ -9,8 +10,7 @@ import "./App.css";
 class App extends Component {
   state = {
     showResult: false,
-    paths: 0,
-    pathsArr: [[]],
+    paths: [],
     maze: [
       [0, 1, 0, 0],
       [0, 1, 0, 1],
@@ -19,26 +19,11 @@ class App extends Component {
     ],
   };
 
-  renderMaze = () =>
-    this.state.maze.map((row, i) => (
-      <tr key={i}>
-        {row.map((valueInCell, j) => (
-          <Cell
-            key={j}
-            isWall={valueInCell}
-            row={i}
-            col={j}
-            paths={this.state.pathsArr}
-          />
-        ))}
-      </tr>
-    ));
-
   changeMazeSizeHandler = () => {
     this.setState({
       maze: changeMazeDimesions(),
       showResult: false,
-      pathsArr: [[[]]],
+      paths: [],
     });
   };
 
@@ -46,7 +31,7 @@ class App extends Component {
     this.setState({
       maze: generateNewMaze(this.state.maze),
       showResult: false,
-      pathsArr: [[[]]],
+      paths: [],
     });
 
   findRoutesHandler = () => {
@@ -55,26 +40,19 @@ class App extends Component {
 
     this.setState({
       showResult: true,
-      paths: numberOfPaths,
-      pathsArr: numberOfPaths ? AllPaths.flat() : [[]],
+      paths: numberOfPaths ? AllPaths : [],
     });
   };
 
   render() {
-    const maze = this.renderMaze();
-
     return (
       <div className="App">
         <Header />
         <main>
-          <div className="maze">
-            <table>
-              <tbody>{maze}</tbody>
-            </table>
-          </div>
+          <Maze maze={this.state.maze} paths={this.state.paths} />
 
           {this.state.showResult && (
-            <h2>{this.state.paths} unique paths found</h2>
+            <h2>{this.state.paths.length} unique paths found</h2>
           )}
 
           <div className="controls">
