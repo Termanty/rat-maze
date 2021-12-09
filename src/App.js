@@ -1,8 +1,11 @@
 import { Component } from "react";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import searchAllRoutes from "./recursiveSerch";
 import "./App.css";
 
-let ROW = 5;
-let COL = 5;
+let ROW = 4;
+let COL = 4;
 let WallProbability = 0.35;
 
 class App extends Component {
@@ -11,11 +14,10 @@ class App extends Component {
     paths: 0,
     pathsArr: [[]],
     maze: [
-      [0, 1, 0, 0, 0],
-      [0, 1, 0, 1, 0],
-      [0, 0, 0, 0, 0],
-      [1, 0, 0, 0, 0],
-      [1, 0, 0, 0, 0],
+      [0, 1, 0, 0],
+      [0, 1, 0, 1],
+      [0, 0, 0, 0],
+      [1, 0, 0, 0],
     ],
   };
 
@@ -67,41 +69,14 @@ class App extends Component {
     });
 
   findRoutesHandler = () => {
-    this.path = [];
-    this.finalPaths = [];
-    this.pathCounter = 0;
-    this.routeSolver(0, 0);
-    console.log(this.pathCounter);
-    console.log(this.finalPaths.flat());
-    this.finalPaths.push([[0, 0]]);
+    let AllPaths = searchAllRoutes(ROW, COL, this.state.maze);
+    let numberOfPaths = AllPaths.length;
+
     this.setState({
       showResult: true,
-      paths: this.pathCounter,
-      pathsArr: this.pathCounter ? this.finalPaths.flat() : [[]],
+      paths: numberOfPaths,
+      pathsArr: numberOfPaths ? AllPaths.flat() : [[]],
     });
-  };
-
-  path = [];
-  finalPaths = [];
-  pathCounter = 0;
-
-  routeSolver = (i, j) => {
-    if (i === ROW - 1 && j === COL - 1) {
-      console.log(this.path);
-      this.finalPaths.push(this.path.map((e) => e.map((i) => i)));
-      this.pathCounter += 1;
-      return;
-    }
-    if (i < ROW - 1 && !this.state.maze[i + 1][j]) {
-      this.path.push([i + 1, j]);
-      this.routeSolver(i + 1, j);
-      this.path.pop();
-    }
-    if (j < COL - 1 && !this.state.maze[i][j + 1]) {
-      this.path.push([i, j + 1]);
-      this.routeSolver(i, j + 1);
-      this.path.pop();
-    }
   };
 
   render() {
@@ -110,31 +85,27 @@ class App extends Component {
     });
     return (
       <div className="App">
-        <header>
-          <h1>Rat Maze</h1>
-        </header>
+        <Header />
         <main>
           <div className="maze">
             <table>
               <tbody>{maze}</tbody>
             </table>
           </div>
+
           {this.state.showResult && (
             <h2>{this.state.paths} unique paths found</h2>
           )}
+
           <div className="controls">
-            <button onClick={this.generateMazeHandler}>NEW MAZE</button>
-            <button onClick={this.findRoutesHandler}>FIND ROUTES</button>
+            <button onClick={this.generateMazeHandler}>generate maze</button>
+            <button onClick={this.findRoutesHandler}>find routes</button>
           </div>
           <button onClick={this.mazeSizeHandler} className="maze-size">
-            CHANGE MAZE SIZE
+            change maze size
           </button>
         </main>
-        <footer>
-          <p>
-            <small>copyright Tero Mäntylä</small>
-          </p>
-        </footer>
+        <Footer />
       </div>
     );
   }
