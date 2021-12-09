@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/rat-maze/static/css/main.181a013c.chunk.css",
+    "main.js": "/rat-maze/static/js/main.1a3fc536.chunk.js",
+    "main.js.map": "/rat-maze/static/js/main.1a3fc536.chunk.js.map",
+    "runtime-main.js": "/rat-maze/static/js/runtime-main.c242baeb.js",
+    "runtime-main.js.map": "/rat-maze/static/js/runtime-main.c242baeb.js.map",
+    "static/js/2.777c0798.chunk.js": "/rat-maze/static/js/2.777c0798.chunk.js",
+    "static/js/2.777c0798.chunk.js.map": "/rat-maze/static/js/2.777c0798.chunk.js.map",
+    "index.html": "/rat-maze/index.html",
+    "static/css/main.181a013c.chunk.css.map": "/rat-maze/static/css/main.181a013c.chunk.css.map",
+    "static/js/2.777c0798.chunk.js.LICENSE.txt": "/rat-maze/static/js/2.777c0798.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c242baeb.js",
+    "static/js/2.777c0798.chunk.js",
+    "static/css/main.181a013c.chunk.css",
+    "static/js/main.1a3fc536.chunk.js"
+  ]
+}
