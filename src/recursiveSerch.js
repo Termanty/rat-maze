@@ -1,16 +1,14 @@
-"use strict";
-
-let path;
-let AllPaths;
 let ROW;
 let COL;
 let maze;
+let path;
+let AllPaths;
 
 const searchAllRoutes = (Maze) => {
   maze = Maze;
   ROW = Maze.length;
   COL = Maze[0].length;
-  path = [[0, 0]]; // current path in search. We have RAT:s position added here.
+  path = []; // current path in search.
   AllPaths = []; // When we find path to the end of maze, we add it here.
 
   dfs(0, 0); // START RECURSIVE SEARCH
@@ -19,32 +17,36 @@ const searchAllRoutes = (Maze) => {
 
 // Depth First Search
 const dfs = (i, j) => {
-  // recursion end condition (checking that we are bottom right corner)
-  if (i === ROW - 1 && j === COL - 1) {
-    AllPaths.push(path.map((e) => e.map((i) => i)));
-    return;
+  path.push([i, j]); // add this location to path
+  if (isEnd(i, j)) {
+    AllPaths.push(copyPath());
+    return path.pop(); // remove location from path
   }
 
-  // move to cell below
-  if (notInBottomRowAndNoWallBelow(i, j)) {
-    path.push([i + 1, j]);
-    dfs(i + 1, j); // go one cell down
-    path.pop(); // remove move down from path
+  if (canGoDown(i, j)) {
+    dfs(i + 1, j); // go down
   }
-  // move to cell on right side
-  if (notInLastColumnAndNoWallRight(i, j)) {
-    path.push([i, j + 1]); // add down move to path
-    dfs(i, j + 1); // go one cell right
-    path.pop(); // remove move down from path
+  if (canGoRight(i, j)) {
+    dfs(i, j + 1); // go right
   }
+  return path.pop(); // remove location from path
 };
 
-function notInBottomRowAndNoWallBelow(i, j) {
+// Helper function
+function isEnd(i, j) {
+  return i === ROW - 1 && j === COL - 1; // bottom right corner?
+}
+
+function canGoDown(i, j) {
   return i < ROW - 1 && !maze[i + 1][j]; // Empty cell below?
 }
 
-function notInLastColumnAndNoWallRight(i, j) {
+function canGoRight(i, j) {
   return j < COL - 1 && !maze[i][j + 1]; // Empty cell right side?
+}
+
+function copyPath() {
+  return path.map((e) => e.map((i) => i));
 }
 
 export default searchAllRoutes;

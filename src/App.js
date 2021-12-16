@@ -12,10 +12,10 @@ class App extends Component {
     showResult: false,
     paths: [],
     maze: [
-      [0, 1, 0, 0],
+      [0, 0, 0, 0],
       [0, 1, 0, 1],
       [0, 0, 0, 0],
-      [1, 0, 0, 0],
+      [0, 1, 0, 0],
     ],
   };
 
