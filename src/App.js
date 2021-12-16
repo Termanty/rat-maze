@@ -2,10 +2,8 @@ import { Component } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Maze from "./components/Maze";
-
-import searchAllRoutes from "./recursiveSerch";
+import searchAllRoutes from "./recursiveSearch";
 import { generateNewMaze, changeMazeDimesions } from "./mazeGenerator";
-import "./App.css";
 
 class App extends Component {
   state = {
